@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sushi-red: #C41E3A;
+  --sushi-cream: #FFF8E7;
+  --sushi-dark: #2C2C2C;
+}
+
+body {
+  font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  color: var(--sushi-dark);
+  background-color: var(--sushi-cream);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.btn-primary {
+  @apply bg-sushi-red text-white font-bold py-4 px-8 rounded-full 
+         hover:bg-red-700 transition-all duration-300 
+         transform hover:scale-105 shadow-lg;
+}
+
+.btn-secondary {
+  @apply bg-white text-sushi-red font-bold py-3 px-6 rounded-full 
+         border-2 border-sushi-red hover:bg-sushi-red hover:text-white 
+         transition-all duration-300;
+}
+
+.card {
+  @apply bg-white rounded-2xl shadow-lg p-6 transition-all duration-300 
+         hover:shadow-xl;
+}
+
+.section-title {
+  @apply text-3xl md:text-4xl font-bold text-center mb-12 text-sushi-dark;
+}
+
