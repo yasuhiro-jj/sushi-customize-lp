@@ -92,7 +92,7 @@ export default function Home() {
       <section className="py-20 px-6 bg-gradient-to-br from-sushi-red to-red-700 text-white">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            あなたの為の、<br />お寿司をご用意します。
+            あなたの為の、<br className="hidden md:block" />お寿司をご用意します。
           </h2>
           <p className="text-xl mb-8 opacity-90">
             まずは、LINEでご相談から初めてみませんか？

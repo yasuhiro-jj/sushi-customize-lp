@@ -166,7 +166,7 @@ function ResultContent() {
               まだ、相談段階なので、注文は確定ではないので安心してご相談ください
             </p>
             <p className="text-sm text-gray-600 mb-6">
-              スマホからボタンを押すと、この診断内容を添えてLINEで相談できます。<br />
+              スマホからボタンを押すと、この診断内容を添えてLINEで相談できます。<br className="hidden md:block" />
               PCの方は、QRコードをスマホのLINEアプリで読み取って友だち追加してください。
             </p>
 

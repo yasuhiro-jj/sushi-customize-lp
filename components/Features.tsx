@@ -52,7 +52,7 @@ export default function Features() {
             <span className="text-sushi-red font-bold">「寿司を相談する」</span>サービスです。
           </p>
           <p className="text-gray-600 mt-4">
-            セット名も、固定価格も、商品写真もありません。<br />
+            セット名も、固定価格も、商品写真もありません。<br className="hidden md:block" />
             あるのは「あなたのための寿司」だけです。
           </p>
         </div>
