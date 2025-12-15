@@ -23,20 +23,20 @@ export default function Features() {
     <section className="py-20 px-6 bg-white">
       <div className="max-w-6xl mx-auto">
         <h2 className="section-title">
-          なぜ、オーダーメイドなのか？
+          なぜ、<br className="block md:hidden" />オーダーメイドなのか？
         </h2>
 
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="card text-center hover:-translate-y-2"
+              className="card hover:-translate-y-2"
             >
-              <div className="text-6xl mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-bold mb-4 text-sushi-dark whitespace-pre-line">
+              <div className="text-6xl mb-4 text-center">{feature.icon}</div>
+              <h3 className="text-xl font-bold mb-4 text-sushi-dark whitespace-pre-line text-center">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+              <p className="text-gray-600 leading-relaxed whitespace-pre-line text-left">
                 {feature.description}
               </p>
             </div>
@@ -45,11 +45,12 @@ export default function Features() {
 
         {/* 追加の説明セクション */}
         <div className="mt-16 bg-sushi-cream rounded-2xl p-8 md:p-12 text-center">
-          <h3 className="text-2xl font-bold mb-4 text-sushi-dark">
+          <h3 className="text-xl md:text-2xl font-bold mb-4 text-sushi-dark">
             これは「寿司を買う」サービスではありません。
           </h3>
           <p className="text-xl text-gray-700 mb-2">
-            <span className="text-sushi-red font-bold">「寿司を相談する」</span>サービスです。
+            <span className="text-sushi-red font-bold">「寿司を相談する」</span><br />
+            サービスです。
           </p>
           <p className="text-gray-600 mt-4">
             セット名も、固定価格も、商品写真もありません。<br className="hidden md:block" />

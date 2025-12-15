@@ -12,7 +12,7 @@ export default function Home() {
       <section className="py-20 px-6 bg-gradient-to-br from-orange-50 to-sushi-cream">
         <div className="max-w-4xl mx-auto">
           <h2 className="section-title">
-            こんなお悩み、ありませんか？
+            こんなお悩み、<br className="block md:hidden" />ありませんか？
           </h2>
 
           <div className="space-y-4 mb-12">
@@ -71,7 +71,7 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-bold mb-2 text-sushi-dark">提案</h3>
               <p className="text-gray-600">
-                あなた専用の寿司構成をご提案させていただきます。
+                あなた専用の寿司構成を<br className="block md:hidden" />ご提案させていただきます。
               </p>
             </div>
 
@@ -91,7 +91,7 @@ export default function Home() {
       {/* 最終CTAセクション */}
       <section className="py-20 px-6 bg-gradient-to-br from-sushi-red to-red-700 text-white">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
             あなたの為の、<br className="hidden md:block" />お寿司をご用意します。
           </h2>
           <p className="text-xl mb-8 opacity-90">
