@@ -92,29 +92,15 @@ function ResultContent() {
   // プロラインの「上級者向け」設定で取得したURLを使用
   const lineAccountBaseUrl = 'https://lactewq9.autosns.app/addfriend/s/Zc7nNtwM8O/@829djxrr'
   
-  // プロラインのGETパラメータを構築
-  // free1: 診断内容の全文（プロライン内で[[free1]]として使用可能）
-  // free2以降も使用可能（必要に応じて追加）
-  const queryParams = new URLSearchParams({
-    free1: diagnosisMessage, // 診断内容をfree1に設定
-    people,
-    scene,
-    alcohol,
-    likes: likesParam,
-    no: noParam,
-    budget,
-  })
-  
   // プロライン用LINE URL（クエリパラメータ付き）
-  // スマホでもデスクトップでも同じプロラインのURLを使用
-  // 例: https://lactewq9.autosns.app/line?free1=【診断結果】...&people=3-4&...
-  const lineUrl = `${lineAccountBaseUrl}?${queryParams.toString()}`
+  // free1パラメータに診断内容をエンコードして設定
+  const lineUrl = `https://lactewq9.autosns.app/addfriend/s/Zc7nNtwM8O/@829djxrr?free1=${encodeURIComponent(diagnosisMessage)}`
   
   // デバッグ用: URLをコンソールに出力
   if (typeof window !== 'undefined') {
     console.log('=== LINE URL デバッグ情報 ===')
     console.log('Base URL:', lineAccountBaseUrl)
-    console.log('Query Params:', queryParams.toString())
+    console.log('free1パラメータ:', encodeURIComponent(diagnosisMessage))
     console.log('Full URL:', lineUrl)
     console.log('URL Length:', lineUrl.length)
     console.log('Is Mobile:', /iphone|ipad|ipod|android/i.test(navigator.userAgent.toLowerCase()))
