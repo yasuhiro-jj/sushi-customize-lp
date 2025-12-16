@@ -3,7 +3,7 @@
 import { Suspense, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import Script from 'next/script'
+import Image from 'next/image'
 import ResultCard from '@/components/ResultCard'
 import LineButton from '@/components/LineButton'
 
@@ -227,33 +227,29 @@ function ResultContent() {
               </p>
             </div>
 
-            {/* PC用: QRコード（プロラインの動的生成） */}
+            {/* PC用: QRコード */}
             <div className="mb-6">
               <div className="text-sm text-gray-600 mb-2">友だち追加用QRコード（PC用）</div>
               <div className="flex justify-center items-center">
-                <div>
-                  <a 
-                    href={lineAccountBaseUrl} 
-                    className="addfriend_href"
-                    style={{ display: 'block' }}
-                  >
-                    <div style={{ margin: '0 auto', width: '200px', height: '200px' }}>
-                      <div className="qrcode" style={{ margin: '25px 0 0 0', textAlign: 'center' }}></div>
-                    </div>
-                  </a>
-                </div>
+                <a 
+                  href={lineUrl} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block"
+                >
+                  <Image 
+                    src="/line-qr-static.png" 
+                    alt="LINE友だち追加QRコード" 
+                    width={200} 
+                    height={200}
+                    className="rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                    priority
+                  />
+                </a>
               </div>
               <p className="text-xs text-gray-500 mt-2">
                 ※ QRコードを読み取ると、診断内容が自動で送信されます
               </p>
-              
-              {/* プロラインのスクリプト */}
-              <Script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" strategy="lazyOnload" />
-              <Script src="https://autosns.jp/js/zbp/jquery.qrcode.min.js" strategy="lazyOnload" />
-              <Script 
-                src="https://lactewq9.autosns.app/copy-qr/js?height=200&show=1" 
-                strategy="lazyOnload"
-              />
             </div>
 
             <p className="text-xs text-gray-500 mt-4">
