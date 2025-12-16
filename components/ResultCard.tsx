@@ -7,6 +7,7 @@ interface ResultCardProps {
   likes: string[]
   no: string[]
   budget: string
+  notes?: string
 }
 
 export default function ResultCard({
@@ -16,6 +17,7 @@ export default function ResultCard({
   likes,
   no,
   budget,
+  notes,
 }: ResultCardProps) {
   // 診断結果に基づいた「方向性」を生成
   const generateDirection = () => {
@@ -163,25 +165,11 @@ export default function ResultCard({
           <div className="text-3xl">🍣</div>
           <div>
             <h2 className="text-2xl font-bold text-sushi-dark mb-2">
-              あなた向けの「方向性」
+              診断内容
             </h2>
             <p className="text-gray-600">
-              この方向性で、LINEでお店の方とご相談ください
+              この内容で、LINEでお店の方とご相談ください
             </p>
-          </div>
-        </div>
-
-        {/* 方向性リスト */}
-        <div className="bg-sushi-cream rounded-lg p-6 mb-6">
-          <div className="flex flex-wrap gap-3">
-            {directions.map((direction, index) => (
-              <span
-                key={index}
-                className="bg-white border-2 border-sushi-red text-sushi-red px-4 py-2 rounded-full font-semibold"
-              >
-                {direction}
-              </span>
-            ))}
           </div>
         </div>
 
@@ -219,6 +207,14 @@ export default function ResultCard({
                 <span className="ml-2 font-semibold">
                   {no.map(getNoName).join('、')}
                 </span>
+              </div>
+            )}
+            {notes && (
+              <div className="md:col-span-2">
+                <span className="text-gray-600">その他のご希望:</span>
+                <div className="ml-2 mt-1 font-semibold whitespace-pre-wrap">
+                  {notes}
+                </div>
               </div>
             )}
           </div>

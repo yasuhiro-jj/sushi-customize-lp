@@ -17,12 +17,12 @@ export default function Hero() {
             写真から選ばない
           </h1>
           <p className="text-2xl md:text-3xl font-bold text-sushi-dark mb-6">
-            あなた好みで組み立てる<br className="hidden md:block" />持ち帰り寿司
+            あなた好みで詰め合わせる<br />持ち帰り寿司
           </p>
           
           <p className="text-xl md:text-2xl font-bold text-sushi-dark leading-relaxed">
-            嫌いなネタ<span className="text-sushi-red">外せます</span><br className="hidden md:block" />
-            予算の中で<span className="text-sushi-red">好きだけ詰めます</span>
+            <span className="text-sushi-red">好きなネタを好きなだけ</span><br />
+            予算の中で選択
           </p>
         </div>
 

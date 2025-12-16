@@ -19,6 +19,7 @@ function ResultContent() {
   const likes = likesParam.split(',').filter(Boolean)
   const no = noParam.split(',').filter(Boolean)
   const budget = searchParams.get('budget') || ''
+  const notes = searchParams.get('notes') || ''
 
   // 診断内容を整形してメッセージを作成
   const formatDiagnosisMessage = () => {
@@ -74,6 +75,9 @@ function ResultContent() {
     message += `好きなネタ: ${likes.length > 0 ? likes.map(l => likeMap[l] || l).join('、') : '特になし'}\n`
     if (no.length > 0) {
       message += `外したいもの: ${no.map(n => noMap[n] || n).join('、')}\n`
+    }
+    if (notes) {
+      message += `\nその他のご希望:\n${notes}\n`
     }
     message += '\nこの内容で相談させていただきます。'
 
@@ -158,7 +162,7 @@ function ResultContent() {
       // URLを更新（履歴は変更しない）
       window.history.replaceState({}, '', currentUrl.toString())
     }
-  }, [diagnosisMessage, people, scene, alcohol, likesParam, noParam, budget])
+  }, [diagnosisMessage, people, scene, alcohol, likesParam, noParam, budget, notes])
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-sushi-cream via-orange-50 to-red-50 py-12 px-6">
@@ -181,6 +185,7 @@ function ResultContent() {
           likes={likes}
           no={no}
           budget={budget}
+          notes={notes}
         />
 
         {/* LINE誘導セクション */}
@@ -190,7 +195,7 @@ function ResultContent() {
               この内容でLINEで相談する
             </h2>
             <p className="text-gray-700 mb-6">
-              まだ、相談段階なので、注文は確定ではないので安心してご相談ください
+              注文は確定ではないので安心してご相談ください
             </p>
             <p className="text-sm text-gray-600 mb-6">
               スマホからボタンを押すと、この診断内容を添えてLINEで相談できます。<br className="hidden md:block" />

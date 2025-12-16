@@ -10,6 +10,7 @@ export interface DiagnosisData {
   likes: string[] // 好きなネタの配列
   no: string[] // 苦手・外したいものの配列
   budget: string // '3000' | '5000' | '7000' | '10000+'
+  notes: string // その他の希望・要望（自由入力）
 }
 
 export default function DiagnosisForm() {
@@ -22,9 +23,10 @@ export default function DiagnosisForm() {
     likes: [],
     no: [],
     budget: '',
+    notes: '',
   })
 
-  const totalSteps = 6
+  const totalSteps = 7
 
   const handleNext = () => {
     if (step < totalSteps) {
@@ -47,6 +49,7 @@ export default function DiagnosisForm() {
       likes: formData.likes.join(','),
       no: formData.no.join(','),
       budget: formData.budget,
+      notes: formData.notes,
     })
     router.push(`/result?${params.toString()}`)
   }
@@ -77,6 +80,8 @@ export default function DiagnosisForm() {
         return true // 任意なので常にtrue
       case 6:
         return formData.budget !== ''
+      case 7:
+        return true // 任意なので常にtrue
       default:
         return false
     }
@@ -241,7 +246,6 @@ export default function DiagnosisForm() {
                 {[
                   { value: 'hikarimono', label: '光物' },
                   { value: 'shellfish', label: '貝類' },
-                  { value: 'raw', label: '生もの' },
                   { value: 'none', label: '特になし' },
                 ].map((item) => (
                   <button
@@ -293,6 +297,28 @@ export default function DiagnosisForm() {
                   </button>
                 ))}
               </div>
+            </div>
+          )}
+
+          {/* Q7: その他のご希望 */}
+          {step === 7 && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-sushi-dark">
+                Q7：その他のご希望
+              </h2>
+              <p className="text-gray-600">
+                特別なご要望やアレルギー、苦手な食材などがあればご記入ください（任意）
+              </p>
+              <textarea
+                value={formData.notes}
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                placeholder="例：わさび抜きでお願いします、シャリ少なめ希望、など"
+                className="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-sushi-red focus:outline-none min-h-[150px] resize-y text-white placeholder-gray-400"
+                maxLength={500}
+              />
+              <p className="text-sm text-gray-500 text-right">
+                {formData.notes.length} / 500文字
+              </p>
             </div>
           )}
         </div>
