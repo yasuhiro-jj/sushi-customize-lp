@@ -1,8 +1,9 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import Script from 'next/script'
 import ResultCard from '@/components/ResultCard'
 import LineButton from '@/components/LineButton'
 
@@ -81,14 +82,16 @@ function ResultContent() {
   const diagnosisMessage = formatDiagnosisMessage()
   
   // プロライン対応: LINE公式アカウントURLにクエリパラメータを付与
-  // 環境変数 NEXT_PUBLIC_LINE_ACCOUNT_URL にLINE公式アカウントURLを設定してください
-  // 例: https://lin.ee/XXXXXXX または https://page.line.me/XXXXXXX
-  // プロラインのWebhook設定で、クエリパラメータを受け取って診断内容をメッセージとして送信できます
-  const lineAccountBaseUrl = process.env.NEXT_PUBLIC_LINE_ACCOUNT_URL || 'https://lactewq9.autosns.app/line'
+  // プロラインのGETパラメータ機能を使用して診断内容を渡します
+  // free1, free2などの変数に値を設定すると、プロライン内で[[free1]]として使用できます
+  // プロラインの「上級者向け」設定で取得したURLを使用
+  const lineAccountBaseUrl = 'https://lactewq9.autosns.app/addfriend/s/Zc7nNtwM8O/@829djxrr'
   
-  // クエリパラメータを構築
-  // messageパラメータは長くなる可能性があるため、URLエンコードを確実にする
+  // プロラインのGETパラメータを構築
+  // free1: 診断内容の全文（プロライン内で[[free1]]として使用可能）
+  // free2以降も使用可能（必要に応じて追加）
   const queryParams = new URLSearchParams({
+    free1: diagnosisMessage, // 診断内容をfree1に設定
     people,
     scene,
     alcohol,
@@ -97,29 +100,10 @@ function ResultContent() {
     budget,
   })
   
-  // messageパラメータは個別に追加（長いテキストのため）
-  queryParams.append('message', diagnosisMessage)
-  
   // プロライン用LINE URL（クエリパラメータ付き）
+  // スマホでもデスクトップでも同じプロラインのURLを使用
+  // 例: https://lactewq9.autosns.app/line?free1=【診断結果】...&people=3-4&...
   const lineUrl = `${lineAccountBaseUrl}?${queryParams.toString()}`
-  
-  // スマートフォンでLINEアプリを直接開くURL（QRコード不要）
-  // デスクトップでは通常のURL、スマートフォンではLINEアプリが開く
-  const getLineAppUrl = () => {
-    if (typeof window !== 'undefined') {
-      const userAgent = navigator.userAgent.toLowerCase()
-      const isMobile = /iphone|ipad|ipod|android/i.test(userAgent)
-      
-      if (isMobile) {
-        // スマートフォンの場合: LINEアプリで直接開く
-        return `line://ti/p/@829djxrr?${queryParams.toString()}`
-      }
-    }
-    // デスクトップの場合: 通常のURL
-    return lineUrl
-  }
-  
-  const finalLineUrl = typeof window !== 'undefined' ? getLineAppUrl() : lineUrl
   
   // デバッグ用: URLをコンソールに出力
   if (typeof window !== 'undefined') {
@@ -127,11 +111,52 @@ function ResultContent() {
     console.log('Base URL:', lineAccountBaseUrl)
     console.log('Query Params:', queryParams.toString())
     console.log('Full URL:', lineUrl)
-    console.log('Final URL (for device):', finalLineUrl)
     console.log('URL Length:', lineUrl.length)
     console.log('Is Mobile:', /iphone|ipad|ipod|android/i.test(navigator.userAgent.toLowerCase()))
+    console.log('User Agent:', navigator.userAgent)
     console.log('============================')
   }
+
+  // プロラインのQRコード生成用に、ページのURLパラメータを設定
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // プロラインのパラメータを設定
+      const params = {
+        free1: diagnosisMessage,
+        people,
+        scene,
+        alcohol,
+        likes: likes.join(','),
+        no: no.join(','),
+        budget,
+        content_element_lp_id: '',
+        scenario_id: 'Zc7nNtwM8O',
+        partner_id: '',
+      }
+      
+      // 既存の要素を削除
+      document.querySelectorAll('.proline-copy-qr-get-params').forEach(el => el.remove())
+      
+      // 新しい要素を追加（プロラインのスクリプトが読み取る）
+      Object.keys(params).forEach(key => {
+        const span = document.createElement('span')
+        span.className = 'proline-copy-qr-get-params'
+        span.setAttribute('data-key', key)
+        span.setAttribute('data-value', params[key])
+        span.setAttribute('id', `proline-copy-qr-get-params-${key}`)
+        document.body.appendChild(span)
+      })
+      
+      // プロラインのスクリプトが読み取れるように、ページのURLパラメータも更新
+      // （ただし、ブラウザの履歴を変更しないようにする）
+      const currentUrl = new URL(window.location.href)
+      Object.keys(params).forEach(key => {
+        currentUrl.searchParams.set(key, params[key])
+      })
+      // URLを更新（履歴は変更しない）
+      window.history.replaceState({}, '', currentUrl.toString())
+    }
+  }, [diagnosisMessage, people, scene, alcohol, likes, no, budget])
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-sushi-cream via-orange-50 to-red-50 py-12 px-6">
@@ -173,28 +198,56 @@ function ResultContent() {
             {/* スマホ用: 診断内容付きLINEボタン */}
             <div className="mb-6">
               <LineButton
-                text="この内容でLINEで相談する（スマホ専用）"
+                text="この内容でLINEで相談する"
                 lineUrl={lineUrl}
                 size="lg"
               />
               <p className="text-xs text-gray-500 mt-2">
-                ※ スマホから押すと診断内容が送信されます
+                ※ ボタンを押すとプロラインのURLに遷移します。診断内容が自動で送信されます。
+              </p>
+              {/* デバッグ情報（開発時のみ表示） */}
+              {process.env.NODE_ENV === 'development' && (
+                <div className="mt-2 p-2 bg-gray-100 rounded text-xs text-left">
+                  <p className="font-bold">デバッグ情報:</p>
+                  <p>Base URL: {lineAccountBaseUrl}</p>
+                  <p className="break-all">Full URL: {lineUrl.substring(0, 100)}...</p>
+                </div>
+              )}
+              <p className="text-xs text-red-500 mt-1">
+                ※ 繋がらない場合は、プロラインの設定（Webhook、URL設定）を確認してください。
+              </p>
+              <p className="text-xs text-blue-500 mt-1">
+                ※ 現在のURL: {lineAccountBaseUrl}（ブラウザのコンソールで詳細を確認できます）
               </p>
             </div>
 
-            {/* PC用: QRコード */}
+            {/* PC用: QRコード（プロラインの動的生成） */}
             <div className="mb-6">
               <div className="text-sm text-gray-600 mb-2">友だち追加用QRコード（PC用）</div>
-              <div className="flex justify-center">
-                <img
-                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAAFKAQMAAABB54RGAAAABlBMVEX///8AAABVwtN+AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABqUlEQVRoge2ZS46EMAxELXGAPhJX50gcAMmT+BfTzcyuZY9UtQgkvLAxcSqGCIKgL+nFpmN0vNlG/xx3pgtoF9SuAoyrNEJdOnMhQDugNjxH9hFOaXxsRhxoQ1RiOp7dpgP9D6hGF2g/VKS7m0ySPW3/M78CLULDkLwsc6bmzZAArUaX0ha3pcX3JKBFqKbFiJ8AnwcAoH1QPt3n76Mj+dLeodveBbQL6rlRgmhbHLNH3Hc8oD1QBTWw7hcjulOSSIH2QGfo5OS8mpgp63O/fQNAK1HacpY03lLlW9IEWo66FzGLHyXF4+EbAFqNyrD4fA6zzz5d0ZOANkGV4nSQJq1UyY5H2z2/Aq1FQ3J8nkrO8aDHIzXQKtTt/FqLTlEqLgLtgUbo9nOLmDKvclXKr0CrUV9jeipLZn8VrghoFzRNsnDaJD0A5LIH0HLUyx66+CjMviXSXAABWo+uZWgFEE+fy0gS0D7oCqK7Ev784QK0Fzp7k9JncidukhloP9Qj6fbR/4z98g0ArUFFvgz5Js2hBLQL6qNH2Mcpe6AVxkfvArQAhSDoC/oBj6kVmd5kuXMAAAAASUVORK5CYII="
-                  alt="LINE友だち追加QRコード"
-                  className="w-48 h-48 border-2 border-green-200 rounded-md shadow-sm bg-white p-2"
-                />
+              <div className="flex justify-center items-center">
+                <div>
+                  <a 
+                    href={lineAccountBaseUrl} 
+                    className="addfriend_href"
+                    style={{ display: 'block' }}
+                  >
+                    <div style={{ margin: '0 auto', width: '200px', height: '200px' }}>
+                      <div className="qrcode" style={{ margin: '25px 0 0 0', textAlign: 'center' }}></div>
+                    </div>
+                  </a>
+                </div>
               </div>
               <p className="text-xs text-gray-500 mt-2">
-                ※ QRコードは友だち追加のみ。診断内容は上のボタンから送信してください
+                ※ QRコードを読み取ると、診断内容が自動で送信されます
               </p>
+              
+              {/* プロラインのスクリプト */}
+              <Script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" strategy="lazyOnload" />
+              <Script src="https://autosns.jp/js/zbp/jquery.qrcode.min.js" strategy="lazyOnload" />
+              <Script 
+                src="https://lactewq9.autosns.app/copy-qr/js?height=200&show=1" 
+                strategy="lazyOnload"
+              />
             </div>
 
             <p className="text-xs text-gray-500 mt-4">
@@ -243,3 +296,4 @@ export default function ResultPage() {
     </Suspense>
   )
 }
+

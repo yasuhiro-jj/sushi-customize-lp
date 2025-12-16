@@ -5,9 +5,9 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-sushi-cream via-orange-50 to-red-50">
       {/* 装飾的な背景パターン */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 left-10 w-64 h-64 rounded-full blur-3xl" style={{ backgroundColor: 'rgba(105, 242, 178, 1)' }}></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl" style={{ backgroundColor: 'rgba(105, 242, 178, 1)' }}></div>
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-64 h-64 rounded-full blur-3xl opacity-5" style={{ backgroundColor: 'rgba(105, 242, 178, 1)' }}></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl opacity-5" style={{ backgroundColor: 'rgba(105, 242, 178, 1)' }}></div>
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 text-center">
@@ -67,4 +67,5 @@ export default function Hero() {
     </section>
   )
 }
+
 

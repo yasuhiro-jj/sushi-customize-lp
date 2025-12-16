@@ -14,9 +14,25 @@ export default function LineButton({ text, lineUrl, size = 'lg', className = '' 
     lg: 'py-4 px-8 text-lg',
   }
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // スマホの場合、LINEアプリがインストールされていれば開く
+    // インストールされていない場合はブラウザで開く
+    if (typeof window !== 'undefined') {
+      const userAgent = navigator.userAgent.toLowerCase()
+      const isMobile = /iphone|ipad|ipod|android/i.test(userAgent)
+      
+      if (isMobile) {
+        // スマホの場合、そのままURLを開く（LINEアプリがインストールされていれば自動で開く）
+        // プロラインのURLは通常のhttps://なので、ブラウザで開いても問題ない
+        console.log('Opening LINE URL on mobile:', lineUrl)
+      }
+    }
+  }
+
   return (
     <a
       href={lineUrl}
+      onClick={handleClick}
       target="_blank"
       rel="noopener noreferrer"
       className={`inline-flex items-center justify-center gap-2 bg-[#06C755] text-white font-bold rounded-full 
@@ -37,4 +53,5 @@ export default function LineButton({ text, lineUrl, size = 'lg', className = '' 
     </a>
   )
 }
+
 
