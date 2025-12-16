@@ -313,7 +313,7 @@ export default function DiagnosisForm() {
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                 placeholder="例：わさび抜きでお願いします、シャリ少なめ希望、など"
-                className="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-sushi-red focus:outline-none min-h-[150px] resize-y text-white placeholder-gray-400"
+                className="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-sushi-red focus:outline-none min-h-[150px] resize-y text-gray-900 placeholder-gray-400"
                 maxLength={500}
               />
               <p className="text-sm text-gray-500 text-right">
