@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Script from 'next/script'
@@ -87,6 +87,10 @@ function ResultContent() {
   // プロラインの「上級者向け」設定で取得したURLを使用
   const lineAccountBaseUrl = 'https://lactewq9.autosns.app/addfriend/s/Zc7nNtwM8O/@829djxrr'
   
+  // 配列を文字列に変換（useMemoでメモ化）
+  const likesStr = useMemo(() => likes.join(','), [likes])
+  const noStr = useMemo(() => no.join(','), [no])
+  
   // プロラインのGETパラメータを構築
   // free1: 診断内容の全文（プロライン内で[[free1]]として使用可能）
   // free2以降も使用可能（必要に応じて追加）
@@ -95,8 +99,8 @@ function ResultContent() {
     people,
     scene,
     alcohol,
-    likes: likes.join(','),
-    no: no.join(','),
+    likes: likesStr,
+    no: noStr,
     budget,
   })
   
@@ -126,8 +130,8 @@ function ResultContent() {
         people,
         scene,
         alcohol,
-        likes: likes.join(','),
-        no: no.join(','),
+        likes: likesStr,
+        no: noStr,
         budget,
         content_element_lp_id: '',
         scenario_id: 'Zc7nNtwM8O',
@@ -156,7 +160,7 @@ function ResultContent() {
       // URLを更新（履歴は変更しない）
       window.history.replaceState({}, '', currentUrl.toString())
     }
-  }, [diagnosisMessage, people, scene, alcohol, likes, no, budget])
+  }, [diagnosisMessage, people, scene, alcohol, likesStr, noStr, budget])
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-sushi-cream via-orange-50 to-red-50 py-12 px-6">
