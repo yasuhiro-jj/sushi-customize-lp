@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useEffect, useMemo } from 'react'
+import { Suspense, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Script from 'next/script'
@@ -14,8 +14,10 @@ function ResultContent() {
   const people = searchParams.get('people') || ''
   const scene = searchParams.get('scene') || ''
   const alcohol = searchParams.get('alcohol') || ''
-  const likes = searchParams.get('likes')?.split(',').filter(Boolean) || []
-  const no = searchParams.get('no')?.split(',').filter(Boolean) || []
+  const likesParam = searchParams.get('likes') || ''
+  const noParam = searchParams.get('no') || ''
+  const likes = likesParam.split(',').filter(Boolean)
+  const no = noParam.split(',').filter(Boolean)
   const budget = searchParams.get('budget') || ''
 
   // 診断内容を整形してメッセージを作成
@@ -87,10 +89,6 @@ function ResultContent() {
   // プロラインの「上級者向け」設定で取得したURLを使用
   const lineAccountBaseUrl = 'https://lactewq9.autosns.app/addfriend/s/Zc7nNtwM8O/@829djxrr'
   
-  // 配列を文字列に変換（useMemoでメモ化）
-  const likesStr = useMemo(() => likes.join(','), [likes])
-  const noStr = useMemo(() => no.join(','), [no])
-  
   // プロラインのGETパラメータを構築
   // free1: 診断内容の全文（プロライン内で[[free1]]として使用可能）
   // free2以降も使用可能（必要に応じて追加）
@@ -99,8 +97,8 @@ function ResultContent() {
     people,
     scene,
     alcohol,
-    likes: likesStr,
-    no: noStr,
+    likes: likesParam,
+    no: noParam,
     budget,
   })
   
@@ -130,8 +128,8 @@ function ResultContent() {
         people,
         scene,
         alcohol,
-        likes: likesStr,
-        no: noStr,
+        likes: likesParam,
+        no: noParam,
         budget,
         content_element_lp_id: '',
         scenario_id: 'Zc7nNtwM8O',
@@ -146,7 +144,7 @@ function ResultContent() {
         const span = document.createElement('span')
         span.className = 'proline-copy-qr-get-params'
         span.setAttribute('data-key', key)
-        span.setAttribute('data-value', params[key])
+        span.setAttribute('data-value', params[key as keyof typeof params])
         span.setAttribute('id', `proline-copy-qr-get-params-${key}`)
         document.body.appendChild(span)
       })
@@ -155,12 +153,12 @@ function ResultContent() {
       // （ただし、ブラウザの履歴を変更しないようにする）
       const currentUrl = new URL(window.location.href)
       Object.keys(params).forEach(key => {
-        currentUrl.searchParams.set(key, params[key])
+        currentUrl.searchParams.set(key, params[key as keyof typeof params])
       })
       // URLを更新（履歴は変更しない）
       window.history.replaceState({}, '', currentUrl.toString())
     }
-  }, [diagnosisMessage, people, scene, alcohol, likesStr, noStr, budget])
+  }, [diagnosisMessage, people, scene, alcohol, likesParam, noParam, budget])
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-sushi-cream via-orange-50 to-red-50 py-12 px-6">
