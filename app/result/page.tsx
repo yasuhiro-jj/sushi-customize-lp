@@ -207,19 +207,18 @@ function ResultContent() {
               <p className="text-xs text-gray-500 mt-2">
                 ※ ボタンを押すとプロラインのURLに遷移します。診断内容が自動で送信されます。
               </p>
-              {/* デバッグ情報（開発時のみ表示） */}
-              {process.env.NODE_ENV === 'development' && (
-                <div className="mt-2 p-2 bg-gray-100 rounded text-xs text-left">
-                  <p className="font-bold">デバッグ情報:</p>
-                  <p>Base URL: {lineAccountBaseUrl}</p>
-                  <p className="break-all">Full URL: {lineUrl.substring(0, 100)}...</p>
-                </div>
-              )}
-              <p className="text-xs text-red-500 mt-1">
-                ※ 繋がらない場合は、プロラインの設定（Webhook、URL設定）を確認してください。
-              </p>
-              <p className="text-xs text-blue-500 mt-1">
-                ※ 現在のURL: {lineAccountBaseUrl}（ブラウザのコンソールで詳細を確認できます）
+              {/* デバッグ情報（常に表示） */}
+              <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-xs text-left">
+                <p className="font-bold mb-2 text-yellow-800">⚠️ デバッグ情報（確認用）:</p>
+                <p className="mb-1"><strong>診断メッセージ:</strong></p>
+                <p className="mb-2 whitespace-pre-wrap text-gray-700">{diagnosisMessage}</p>
+                <p className="mb-1"><strong>Base URL:</strong> {lineAccountBaseUrl}</p>
+                <p className="mb-1"><strong>free1パラメータ:</strong> {diagnosisMessage.substring(0, 50)}...</p>
+                <p className="break-all"><strong>完全なURL:</strong> {lineUrl.substring(0, 150)}...</p>
+                <p className="mt-2 text-red-600">※ プロラインで[[free1]]が表示されない場合、このメッセージが正しく渡っているか確認してください</p>
+              </div>
+              <p className="text-xs text-red-500 mt-2">
+                ※ 繋がらない場合は、プロラインの設定（Webhook、LINEログイン設定）を確認してください。
               </p>
             </div>
 

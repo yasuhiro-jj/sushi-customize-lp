@@ -14,15 +14,15 @@ export default function Hero() {
         {/* メインキャッチコピー */}
         <div className="mb-8 animate-fade-in flex flex-col items-center justify-center">
           <h1 className="text-3xl md:text-5xl font-bold text-sushi-dark mb-6 leading-tight">
-            写真から選ばない。
+            写真から選ばない
           </h1>
           <p className="text-2xl md:text-3xl font-bold text-sushi-dark mb-6">
-            あなた好みで組み立てる、<br className="hidden md:block" />持ち帰り寿司。
+            あなた好みで組み立てる<br className="hidden md:block" />持ち帰り寿司
           </p>
           
           <p className="text-xl md:text-2xl font-bold text-sushi-dark leading-relaxed">
-            嫌いなネタ、<span className="text-sushi-red">外せます。</span><br className="hidden md:block" />
-            予算の中で、<span className="text-sushi-red">好きだけ詰めます。</span>
+            嫌いなネタ<span className="text-sushi-red">外せます</span><br className="hidden md:block" />
+            予算の中で<span className="text-sushi-red">好きだけ詰めます</span>
           </p>
         </div>
 
