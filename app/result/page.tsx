@@ -224,7 +224,7 @@ function ResultContent() {
               <div className="text-sm text-gray-600 mb-2">友だち追加用QRコード（PC用）</div>
               <div className="flex justify-center items-center mb-4">
                 <a 
-                  href={lineUrl} 
+                  href="https://lactewq9.autosns.app/addfriend/s/Zc7nNtwM8O/@829djxrr" 
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block"
@@ -240,14 +240,14 @@ function ResultContent() {
                 </a>
               </div>
               <p className="text-xs text-gray-500 mb-4">
-                ※ QRコードを読み取ると、診断内容が自動で送信されます
+                ※ QRコードを読み取ると、LINE友だち追加ページに遷移します
               </p>
               <div className="mt-4 flex flex-col items-center gap-3">
                 <p className="text-sm text-gray-600">
                   QRで友だち追加するときは、こちらをタップしてください。
                 </p>
                 <a
-                  href={lineUrl}
+                  href="https://lactewq9.autosns.app/addfriend/s/Zc7nNtwM8O/@829djxrr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary inline-block px-6 py-3"
