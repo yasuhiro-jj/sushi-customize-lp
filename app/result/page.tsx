@@ -3,6 +3,7 @@
 import { Suspense, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import ResultCard from '@/components/ResultCard'
 import LineButton from '@/components/LineButton'
 
@@ -218,8 +219,29 @@ function ResultContent() {
               </p>
             </div>
 
-            {/* QRコード用ボタン */}
+            {/* QRコード */}
             <div className="mb-6">
+              <div className="text-sm text-gray-600 mb-2">友だち追加用QRコード（PC用）</div>
+              <div className="flex justify-center items-center mb-4">
+                <a 
+                  href={lineUrl} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block"
+                >
+                  <Image 
+                    src="/line-qr.png" 
+                    alt="LINE友だち追加QRコード" 
+                    width={200} 
+                    height={200}
+                    className="rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                    priority
+                  />
+                </a>
+              </div>
+              <p className="text-xs text-gray-500 mb-4">
+                ※ QRコードを読み取ると、診断内容が自動で送信されます
+              </p>
               <div className="mt-4 flex flex-col items-center gap-3">
                 <p className="text-sm text-gray-600">
                   QRで友だち追加するときは、こちらをタップしてください。
@@ -281,4 +303,5 @@ export default function ResultPage() {
     </Suspense>
   )
 }
+
 
