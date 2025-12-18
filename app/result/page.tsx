@@ -202,49 +202,16 @@ function ResultContent() {
                 size="lg"
               />
               <p className="text-xs text-gray-500 mt-2">
-                ※ ボタンを押すとプロラインのURLに遷移します。診断内容が自動で送信されます。
-              </p>
-              {/* デバッグ情報（常に表示） */}
-              <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-xs text-left">
-                <p className="font-bold mb-2 text-yellow-800">⚠️ デバッグ情報（確認用）:</p>
-                <p className="mb-1"><strong>診断メッセージ:</strong></p>
-                <p className="mb-2 whitespace-pre-wrap text-gray-700">{diagnosisMessage}</p>
-                <p className="mb-1"><strong>Base URL:</strong> {lineAccountBaseUrl}</p>
-                <p className="mb-1"><strong>free1パラメータ:</strong> {diagnosisMessage.substring(0, 50)}...</p>
-                <p className="break-all"><strong>完全なURL:</strong> {lineUrl.substring(0, 150)}...</p>
-                <p className="mt-2 text-red-600">※ プロラインで[[free1]]が表示されない場合、このメッセージが正しく渡っているか確認してください</p>
-              </div>
-              <p className="text-xs text-red-500 mt-2">
-                ※ 繋がらない場合は、プロラインの設定（Webhook、LINEログイン設定）を確認してください。
+                このボタンを押すと、お店の担当者と直接やり取りできます。
               </p>
             </div>
 
             {/* QRコード */}
             <div className="mb-6">
-              <div className="text-sm text-gray-600 mb-2">友だち追加用QRコード（PC用）</div>
-              <div className="flex justify-center items-center mb-4">
-                <a 
-                  href="https://lactewq9.autosns.app/addfriend/s/Zc7nNtwM8O/@829djxrr" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block"
-                >
-                  <Image 
-                    src="/line-qr.png" 
-                    alt="LINE友だち追加QRコード" 
-                    width={200} 
-                    height={200}
-                    className="rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                    priority
-                  />
-                </a>
-              </div>
-              <p className="text-xs text-gray-500 mb-4">
-                ※ QRコードを読み取ると、LINE友だち追加ページに遷移します
-              </p>
               <div className="mt-4 flex flex-col items-center gap-3">
                 <p className="text-sm text-gray-600">
-                  QRで友だち追加するときは、こちらをタップしてください。
+                  PCご利用の方はQRコードで友達追加できますので、<br />
+                  下記のボタンをタップしてください。
                 </p>
                 <a
                   href="https://lactewq9.autosns.app/addfriend/s/Zc7nNtwM8O/@829djxrr"
@@ -252,7 +219,8 @@ function ResultContent() {
                   rel="noopener noreferrer"
                   className="btn-primary inline-block px-6 py-3"
                 >
-                  QRで友だち追加するときは、こちらをタップしてください
+                  QRで友達追加する時は、<br />
+                  こちらをタップしてください。
                 </a>
               </div>
             </div>
